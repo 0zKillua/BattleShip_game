@@ -2,8 +2,6 @@ const { MerkleTree } = require('merkletreejs');
 const { ethers } = require('ethers');
 const readline = require('readline');
 
-// [Previous code remains the same until the console.log statements for board roots]
-// Predefined Boards (1 = ship, 0 = empty)
 const BOARD_1 = [
     [1,1,1,1,1,0,0,0,0,0], // 5-length ship (row 0)
     [1,1,1,1,0,0,0,0,0,0], // 4-length ship (row 1)
@@ -93,6 +91,30 @@ function generateProof(boardId, x, y) {
       proof
     };
   }
+
+// Add this function to your existing script
+function generateShipBitmask(board) {
+    let bitmask = BigInt(0);
+    for (let x = 0; x < 10; x++) {
+      for (let y = 0; y < 10; y++) {
+        const bitPosition = BigInt(x * 10 + y);
+        if (board[x][y] === 1) {
+          bitmask |= (BigInt(1) << bitPosition);
+        }
+      }
+    }
+    return '0x' + bitmask.toString(16).padStart(32, '0'); // Return as hex string
+  }
+  
+  // Example usage:
+  const shipBitmaskBoard1 = generateShipBitmask(BOARD_1);
+  const shipBitmaskBoard2 = generateShipBitmask(BOARD_2);
+  
+  console.log('\nShip Bitmasks:');
+  console.log('Board 1 Bitmask:', shipBitmaskBoard1);
+  console.log('Board 2 Bitmask:', shipBitmaskBoard2);
+
+
 
   
 // Create readline interface
