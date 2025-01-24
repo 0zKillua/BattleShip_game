@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "ethers": "5.7",
+    "merkletreejs": "^0.4.1"
+  }
+}
